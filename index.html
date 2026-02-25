@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Cumpleaños ❤️</title>
+
+  <!-- =====================================================================
+         CDNs REQUERIDOS — no los muevas ni borres
+    ====================================================================== -->
+  <!-- Leaflet.js — mapa interactivo -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- canvas-confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- =====================================================================
+         SECCIÓN 1: HERO
+    ====================================================================== -->
+  <section id="hero" class="hero-section">
+
+    <!-- Partículas de fondo (canvas) -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Estrellas decorativas (se generan via JS) -->
+    <div class="stars-bg" id="stars-bg"></div>
+
+    <!-- Contenido central del hero -->
+    <div class="hero-content">
+      <div class="hero-tag">💌 Para mi reina, con todo mi amor, tu principe..</div>
+
+      <!-- ✏️  CAMBIA "Valentina" por el nombre de tu novia -->
+      <h1 class="hero-title">
+        Feliz Cumpleaños,<br />
+        <span class="hero-name">Mi amor</span>
+      </h1>
+
+      <!-- ✏️  CAMBIA el número de kilómetros -->
+      <p class="hero-subtitle">
+        A pesar de los <span class="hero-km">4623</span> km,<br class="mobile-break" />
+        estamos a un clic de distancia.
+        <br>
+        <br>
+        Aprieta el boton de la musica mi amor, espera que comience y continua con este regalito magico.
+      </p>
+
+      <button id="cta-btn" class="cta-button">
+        <span class="cta-text">Comenzar nuestro viaje</span>
+        <span class="cta-icon">✈️</span>
+      </button>
+
+      <p class="hero-hint">↓ Haz scroll para viajar juntos ↓</p>
+    </div>
+
+    <!-- Decoraciones flotantes -->
+    <div class="float-deco" id="deco-1">❤️</div>
+    <div class="float-deco" id="deco-2">✨</div>
+    <div class="float-deco" id="deco-3">🌙</div>
+  </section>
+
+  <!-- =====================================================================
+         SECCIÓN 2: MAPA INTERACTIVO
+         La altura total (~500vh) es la "pista" de scroll para GSAP
+    ====================================================================== -->
+  <section id="map-section" class="map-section">
+
+    <!-- El mapa Leaflet se renderiza aquí -->
+    <div id="map" class="map-container"></div>
+
+    <!-- ── Overlay de tarjeta de memoria ── -->
+    <div id="memory-card" class="memory-card" aria-hidden="true">
+      <button id="memory-close" class="memory-close" aria-label="Cerrar">×</button>
+      <div class="memory-inner">
+        <div class="memory-media-container" id="memory-media-container">
+          <img id="memory-photo" src="" alt="Recuerdo" />
+          <video id="memory-video" playsinline loop muted></video>
+        </div>
+        <div class="memory-text">
+          <span id="memory-date" class="memory-date">01 • Enero • 2024</span>
+          <p id="memory-msg" class="memory-msg">Un momento especial que guardamos juntos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="map-nav" id="map-nav">
+      <button id="nav-prev" class="map-nav-btn" aria-label="Recuerdo anterior" disabled>&#8592;</button>
+      <div class="step-dots" id="step-dots">
+        <!-- Los puntos se generan en JS según la cantidad de hitos -->
+      </div>
+      <button id="nav-next" class="map-nav-btn" aria-label="Siguiente recuerdo">
+        <span class="nav-next-label">Siguiente</span> &#8594;
+      </button>
+    </div>
+
+    <!-- Barra de progreso del viaje -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-inner">
+        <div id="journey-progress" class="journey-progress"></div>
+      </div>
+      <span id="progress-label" class="progress-label">✈️ Iniciando viaje...</span>
+    </div>
+
+  </section>
+
+  <!-- =====================================================================
+         SECCIÓN 3: GRAN FINAL — VIDEO + CONFETI
+    ====================================================================== -->
+  <section id="final-section" class="final-section">
+
+    <!-- Canvas de confeti (canvas-confetti lo usa globalmente) -->
+
+    <div class="final-content">
+      <div class="final-hearts">❤️</div>
+
+      <h2 class="final-title">El viaje no termina aquí.</h2>
+      <div class="video-wrap" id="video-wrap">
+
+        <!-- OPCIÓN B: MP4 local — Activada según pedido -->
+        <video id="local-video" class="video-player" controls playsinline>
+          <source src="videos/SaludoCumpleañosEsposita.mp4" type="video/mp4" />
+        </video>
+        <button id="play-overlay" class="play-overlay" aria-label="Reproducir video">
+          <span class="play-icon">▶</span>
+        </button>
+      </div>
+
+      <!-- ✏️  CAMBIA el mensaje final si quieres -->
+      <p class="final-message">
+        Te amo. Pronto romperemos esa distancia.🌹💟
+      </p>
+
+      <div class="final-signature">— Con todo mi corazón 💌</div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+         AUDIO de fondo
+         ✏️  CAMBIA 'audio/musica.mp3' por la ruta de tu archivo de música.
+         Formatos recomendados: .mp3 / .ogg / .webm
+    ====================================================================== -->
+  <audio id="bg-music" loop preload="none">
+    <source src="audio/Clocks.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Control flotante de música -->
+  <button id="music-toggle" class="music-toggle" aria-label="Pausar/Reanudar música" title="Música">
+    <span id="music-icon">🎵</span>
+  </button>
+
+  <!-- Overlay de visor de media (Lightbox) -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightbox-close" class="lightbox-close" aria-label="Cerrar">×</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Vista ampliada" />
+      <video id="lightbox-video" controls playsinline></video>
+    </div>
+  </div>
+
+  <!-- JavaScript principal -->
+  <script src="main.js"></script>
+</body>
+
+</html>
