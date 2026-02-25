@@ -92,7 +92,7 @@
       <div class="memory-inner">
         <div class="memory-media-container" id="memory-media-container">
           <img id="memory-photo" src="" alt="Recuerdo" />
-          <video id="memory-video" playsinline loop muted></video>
+          <video id="memory-video" playsinline webkit-playsinline preload="metadata" loop muted></video>
         </div>
         <div class="memory-text">
           <span id="memory-date" class="memory-date">01 • Enero • 2024</span>
@@ -136,7 +136,7 @@
       <div class="video-wrap" id="video-wrap">
 
         <!-- OPCIÓN B: MP4 local — Activada según pedido -->
-        <video id="local-video" class="video-player" controls playsinline>
+        <video id="local-video" class="video-player" controls playsinline webkit-playsinline preload="metadata">
           <source src="videos/felizcumpleanito.mp4" type="video/mp4" />
           Tu navegador no soporta video HTML5.
         </video><button id="play-overlay" class="play-overlay" aria-label="Reproducir video">
@@ -172,7 +172,7 @@
     <button id="lightbox-close" class="lightbox-close" aria-label="Cerrar">×</button>
     <div class="lightbox-content">
       <img id="lightbox-img" src="" alt="Vista ampliada" />
-      <video id="lightbox-video" controls playsinline></video>
+      <video id="lightbox-video" controls playsinline webkit-playsinline preload="metadata"></video>
     </div>
   </div>
 
